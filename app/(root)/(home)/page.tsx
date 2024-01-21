@@ -1,9 +1,39 @@
 import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
+import NoResults from "@/components/shared/NoResults";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
+
+const questions = [
+  // {
+  //   _id: 1,
+  //   title: "How can an airconditioning machine exist?",
+  //   tags: [
+  //     { _id: 1, name: "python" },
+  //     { _id: 2, name: "javascript" },
+  //   ],
+  //   author: "John Doe",
+  //   upvotes: 10,
+  //   views: 100,
+  //   answers: 2,
+  //   createdAt: "2021-09-01T12:00:00.00Z",
+  // },
+  // {
+  //   _id: 2,
+  //   title: "How I can center a div?",
+  //   tags: [
+  //     { _id: 1, name: "css" },
+  //     { _id: 2, name: "grid" },
+  //   ],
+  //   author: "John Doe",
+  //   upvotes: 10,
+  //   views: 100,
+  //   answers: 2,
+  //   createdAt: "2021-09-01T12:00:00.00Z",
+  // },
+];
 
 export default function Home() {
   return (
@@ -35,6 +65,19 @@ export default function Home() {
       </div>
 
       <HomeFilters />
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length > 0 ? (
+          questions.map((question) => "QuestionCard")
+        ) : (
+          <NoResults
+            title="There’s no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 }
