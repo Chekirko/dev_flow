@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
 import NoResults from "@/components/shared/NoResults";
@@ -7,34 +8,41 @@ import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
 
 const questions = [
-  // {
-  //   _id: 1,
-  //   title: "How can an airconditioning machine exist?",
-  //   tags: [
-  //     { _id: 1, name: "python" },
-  //     { _id: 2, name: "javascript" },
-  //   ],
-  //   author: "John Doe",
-  //   upvotes: 10,
-  //   views: 100,
-  //   answers: 2,
-  //   createdAt: "2021-09-01T12:00:00.00Z",
-  // },
-  // {
-  //   _id: 2,
-  //   title: "How I can center a div?",
-  //   tags: [
-  //     { _id: 1, name: "css" },
-  //     { _id: 2, name: "grid" },
-  //   ],
-  //   author: "John Doe",
-  //   upvotes: 10,
-  //   views: 100,
-  //   answers: 2,
-  //   createdAt: "2021-09-01T12:00:00.00Z",
-  // },
+  {
+    _id: "1",
+    title: "How can an air conditioning machine exist?",
+    tags: [
+      { id: "1", name: "python" },
+      { id: "2", name: "javascript" },
+    ],
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "url/to/picture",
+    },
+    upvotes: 1000000,
+    views: 10000,
+    answers: [],
+    createdAt: new Date("2021-09-01T12:00:00.00Z"),
+  },
+  {
+    _id: "2",
+    title: "How can I center a div?",
+    tags: [
+      { id: "1", name: "css" },
+      { id: "2", name: "grid" },
+    ],
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "url/to/picture",
+    },
+    upvotes: 10878,
+    views: 1007875,
+    answers: [],
+    createdAt: new Date("2021-09-01T12:00:00.00Z"),
+  },
 ];
-
 export default function Home() {
   return (
     <>
@@ -68,7 +76,19 @@ export default function Home() {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {questions.length > 0 ? (
-          questions.map((question) => "QuestionCard")
+          questions.map((question, i) => (
+            <QuestionCard
+              key={i}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              upvotes={question.upvotes}
+              author={question.author}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
+          ))
         ) : (
           <NoResults
             title="There’s no question to show"
