@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "node ./postinstall.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.5",
@@ -17,11 +18,13 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/typography": "^0.5.10",
+    "@tinymce/tinymce-react": "^4.3.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "fs-extra": "^11.2.0",
     "lucide-react": "^0.295.0",
     "next": "14.0.3",
     "prettier": "^3.1.0",
@@ -30,6 +33,7 @@
     "react-hook-form": "^7.49.3",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
+    "tinymce": "^6.8.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
