@@ -2,8 +2,9 @@
 
 import User from "@/database/user.model";
 import { connectToDb } from "../mongoose";
+import { GetUserByIdParams } from "./shared.types";
 
-export async function getUserById(params: any) {
+export async function getUserById(params: GetUserByIdParams) {
   try {
     connectToDb();
 

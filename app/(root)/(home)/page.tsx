@@ -5,45 +5,12 @@ import NoResults from "@/components/shared/NoResults";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1",
-    title: "How can an air conditioning machine exist?",
-    tags: [
-      { id: "1", name: "python" },
-      { id: "2", name: "javascript" },
-    ],
-    author: {
-      _id: "1",
-      name: "John Doe",
-      picture: "url/to/picture",
-    },
-    upvotes: 1000000,
-    views: 10000,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.00Z"),
-  },
-  {
-    _id: "2",
-    title: "How can I center a div?",
-    tags: [
-      { id: "1", name: "css" },
-      { id: "2", name: "grid" },
-    ],
-    author: {
-      _id: "1",
-      name: "John Doe",
-      picture: "url/to/picture",
-    },
-    upvotes: 10878,
-    views: 1007875,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.00Z"),
-  },
-];
-export default function Home() {
+export default async function Home() {
+  const { questions } = await getQuestions({});
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
