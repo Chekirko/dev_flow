@@ -54,16 +54,19 @@ export async function POST(req: Request) {
   // Get the ID and type
   //   const { id } = evt.data;
   const eventType = evt.type;
+  console.log({ eventType });
 
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
 
+    console.log(id);
+
     // Create a new user in your database
     const mongoUser = await createUser({
       clerkId: id,
       name: `${first_name}${last_name ? ` ${last_name}` : ""}`,
-      username: username!,
+      username: username! || `test-${Math.random()}`,
       email: email_addresses[0].email_address,
       picture: image_url,
     });
@@ -80,7 +83,7 @@ export async function POST(req: Request) {
       clerkId: id,
       updateData: {
         name: `${first_name}${last_name ? ` ${last_name}` : ""}`,
-        username: username!,
+        username: username! || "test",
         email: email_addresses[0].email_address,
         picture: image_url,
       },
