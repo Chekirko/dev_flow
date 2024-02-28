@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import ParseHTML from "@/components/shared/ParseHTML";
+import Answer from "@/components/forms/Answer";
+import RenderTag from "@/components/shared/RenderTag";
 
 const Page = async ({ params }: any) => {
   const result = await getQuestionById({ questionId: params.id });
@@ -59,6 +61,19 @@ const Page = async ({ params }: any) => {
       </div>
 
       <ParseHTML data={result.content} />
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        {result.tags.map((tag: any) => (
+          <RenderTag
+            key={tag._id}
+            _id={tag._id}
+            name={tag.name}
+            showCount={false}
+          />
+        ))}
+      </div>
+
+      <Answer />
     </>
   );
 };
