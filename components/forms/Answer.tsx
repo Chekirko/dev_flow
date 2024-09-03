@@ -16,11 +16,19 @@ import {
 } from "../ui/form";
 import { useTheme } from "@/context/ThemeProvider";
 import { Button } from "../ui/button";
+import { createAnswer } from "@/lib/actions/answer.action";
+import { usePathname } from "next/navigation";
 
-const Answer = () => {
+interface IAnswerProps {
+  questionId: string;
+  authorId: string;
+}
+
+const Answer = ({ authorId, questionId }: IAnswerProps) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const pathname = usePathname();
 
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -29,7 +37,28 @@ const Answer = () => {
     },
   });
 
-  const handleCreateAnswer = (data: any) => {};
+  const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      });
+
+      form.reset();
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent("");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div>
