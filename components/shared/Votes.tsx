@@ -8,6 +8,7 @@ import {
   upvoteQuestion,
 } from "@/lib/actions/question.action";
 import { usePathname } from "next/navigation";
+import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 
 interface Props {
   type: string;
@@ -31,51 +32,49 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
-  const handleVote = (action: string) => {
+  const handleVote = async (action: string) => {
     if (!userId) {
       return;
     }
 
     if (action === "upvote") {
       if (type === "question") {
-        upvoteQuestion({
+        await upvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
           path: pathname,
         });
+      } else if (type === "answer") {
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
-      // else if (type === "answer") {
-      //   upvoteAnswer({
-      //     questionId: JSON.parse(itemId),
-      //     userId: JSON.parse(userId),
-      //     hasupVoted,
-      //     hasdownVoted,
-      //     path: pathname,
-      //   });
-      // }
     }
 
     if (action === "downvote") {
       if (type === "question") {
-        downvoteQuestion({
+        await downvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
           path: pathname,
         });
+      } else if (type === "answer") {
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
-      //  else if (type === "answer") {
-      //   downvoteAnswer({
-      //     questionId: JSON.parse(itemId),
-      //     userId: JSON.parse(userId),
-      //     hasupVoted,
-      //     hasdownVoted,
-      //     path: pathname,
-      //   });
-      // }
     }
   };
 
