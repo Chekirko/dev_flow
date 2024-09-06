@@ -1,6 +1,13 @@
+"use client";
+
 import { formatAndDivideNumber } from "@/lib/utils";
 import React from "react";
 import Image from "next/image";
+import {
+  downvoteQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/question.action";
+import { usePathname } from "next/navigation";
 
 interface Props {
   type: string;
@@ -23,7 +30,54 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
-  const handleVote = (action: string) => {};
+  const pathname = usePathname();
+  const handleVote = (action: string) => {
+    if (!userId) {
+      return;
+    }
+
+    if (action === "upvote") {
+      if (type === "question") {
+        upvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      }
+      // else if (type === "answer") {
+      //   upvoteAnswer({
+      //     questionId: JSON.parse(itemId),
+      //     userId: JSON.parse(userId),
+      //     hasupVoted,
+      //     hasdownVoted,
+      //     path: pathname,
+      //   });
+      // }
+    }
+
+    if (action === "downvote") {
+      if (type === "question") {
+        downvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      }
+      //  else if (type === "answer") {
+      //   downvoteAnswer({
+      //     questionId: JSON.parse(itemId),
+      //     userId: JSON.parse(userId),
+      //     hasupVoted,
+      //     hasdownVoted,
+      //     path: pathname,
+      //   });
+      // }
+    }
+  };
 
   const handleSave = () => {};
 
@@ -73,7 +127,7 @@ const Votes = ({
         </div>
       </div>
 
-      {type === "Question" && (
+      {type === "question" && (
         <Image
           src={
             hasSaved
