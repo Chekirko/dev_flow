@@ -1,41 +1,36 @@
 import QuestionCard from "@/components/cards/QuestionCard";
-import Filter from "@/components/shared/Filter";
 import NoResults from "@/components/shared/NoResults";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import { QuestionFilters } from "@/constants/filters";
-import { getSavedQuestions } from "@/lib/actions/user.action";
-import { auth } from "@clerk/nextjs";
+import { getQuestionByTagId } from "@/lib/actions/tag.action";
+import { URLProps } from "@/types";
 
-export default async function CollectionPage() {
-  const { userId } = auth();
-
-  if (!userId) {
-    return null;
-  }
-  const result = await getSavedQuestions({ clerkId: userId });
+export default async function TagDetailsPage({
+  params,
+  searchParams,
+}: URLProps) {
+  const { tagTitle, questions } = await getQuestionByTagId({
+    tagId: params.id,
+    page: 1,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
+      <h1 className="h1-bold text-dark100_light900">{tagTitle}</h1>
 
-      <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
+      <div className="mt-11 w-full">
         <LocalSearchbar
           route="/"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for questions"
+          placeholder="Search tag questions"
           otherClasses="flex-1"
-        />
-
-        <Filter
-          filters={QuestionFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          result.questions.map((question: any) => (
+        {questions.length > 0 ? (
+          questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -50,7 +45,7 @@ export default async function CollectionPage() {
           ))
         ) : (
           <NoResults
-            title="There’s no saved question to show"
+            title="There’s no tag questions to show"
             description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
             link="/ask-question"
             linkTitle="Ask a Question"
