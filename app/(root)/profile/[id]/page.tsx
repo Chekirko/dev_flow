@@ -1,4 +1,5 @@
 import ProfileLink from "@/components/shared/ProfileLink";
+import QuestionTab from "@/components/shared/QuestionTab";
 import Stats from "@/components/shared/Stats";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -91,12 +92,11 @@ const ProfilePage = async ({ params, searchParams }: URLProps) => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts">
-            Posts
-            {/* <QuestionTab
+            <QuestionTab
               searchParams={searchParams}
               userId={userInfo.user._id}
               clerkId={clerkId}
-            /> */}
+            />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
             Answers
