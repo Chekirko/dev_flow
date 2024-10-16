@@ -38,7 +38,15 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDb();
 
-    const tags = await Tag.find({});
+    const { searchQuery } = params;
+
+    const query: FilterQuery<ITag> = {};
+
+    if (searchQuery) {
+      query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
+    }
+
+    const tags = await Tag.find(query);
 
     return { tags };
   } catch (error) {
@@ -73,8 +81,6 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
     if (!tag) {
       throw new Error("Tag not found");
     }
-
-    console.log(tag);
 
     const questions = tag.questions;
 
