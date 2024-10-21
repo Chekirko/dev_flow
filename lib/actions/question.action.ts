@@ -54,7 +54,9 @@ export async function getQuestions(params: GetQuestionsParams) {
       .populate({ path: "author", model: User })
       .sort(sortOptions);
 
-    return { questions };
+    const isNext = true;
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
