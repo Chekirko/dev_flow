@@ -21,7 +21,7 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDb();
 
-    const { searchQuery, filter, page = 1, pageSize = 2 } = params;
+    const { searchQuery, filter, page = 1, pageSize = 20 } = params;
 
     const skipAmount = (page - 1) * pageSize;
 
@@ -54,9 +54,9 @@ export async function getQuestions(params: GetQuestionsParams) {
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
+      .sort(sortOptions)
       .skip(skipAmount)
-      .limit(pageSize)
-      .sort(sortOptions);
+      .limit(pageSize);
 
     const totalQuestions = await Question.countDocuments(query);
 
