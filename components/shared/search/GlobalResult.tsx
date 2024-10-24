@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import GlobalFilters from "./GlobalFilters";
-// import { globalSearch } from "@/lib/actions/general.action";
+import { globalSearch } from "@/lib/actions/general.action";
 
 const GlobalResult = () => {
   const searchParams = useSearchParams();
@@ -21,27 +21,27 @@ const GlobalResult = () => {
   const global = searchParams.get("global");
   const type = searchParams.get("type");
 
-  // useEffect(() => {
-  //   const fetchResult = async () => {
-  //     setResult([]);
-  //     setIsLoading(true);
+  useEffect(() => {
+    const fetchResult = async () => {
+      setResult([]);
+      setIsLoading(true);
 
-  //     try {
-  //       const res = await globalSearch({ query: global, type });
+      try {
+        const res = await globalSearch({ query: global, type });
 
-  //       setResult(JSON.parse(res));
-  //     } catch (error) {
-  //       console.error(error);
-  //       throw error;
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+        setResult(JSON.parse(res));
+      } catch (error) {
+        console.error(error);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   if (global) {
-  //     fetchResult();
-  //   }
-  // }, [global, type]);
+    if (global) {
+      fetchResult();
+    }
+  }, [global, type]);
 
   const renderLink = (type: string, id: string) => {
     switch (type) {
