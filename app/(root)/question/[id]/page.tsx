@@ -11,6 +11,11 @@ import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Question | DevFlow",
+};
 
 const Page = async ({ params, searchParams }: any) => {
   const question = await getQuestionById({ questionId: params.id });
