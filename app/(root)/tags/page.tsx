@@ -7,6 +7,11 @@ import NoResults from "@/components/shared/NoResults";
 import { getAllTags } from "@/lib/actions/tag.action";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags | DevFlow",
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
